@@ -1,0 +1,10 @@
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .form{
+    width: calc(max(70%, 400px));
+    display: flex;
+    flex-direction: column;
+  }
+}

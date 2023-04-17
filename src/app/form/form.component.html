@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <h4>Test From</h4>
+  <form class="form" [formGroup]="form">
+    <mat-form-field>
+      <label>Number Only</label>
+      <input matInput [appCustomValidator]="numbersPattern" formControlName="numberOnly" />
+      <mat-error></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <label>Persian Alpabet Only</label>
+      <input matInput [appCustomValidator]="persianAlphabetPattern" formControlName="persianAlphabet" />
+      <mat-error></mat-error>
+    </mat-form-field>
+
+
+
+    <button mat-raised-button type="button" (click)="formSubmit()">Save</button>
+  </form>
+</div>
