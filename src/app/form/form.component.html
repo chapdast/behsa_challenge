@@ -1,20 +1,45 @@
 <div class="wrapper">
   <h4>Test From</h4>
   <form class="form" [formGroup]="form">
-    <mat-form-field>
-      <label>Number Only</label>
+    <!-- Number Field -->
+    <mat-form-field class="{{state('numberOnly')}}">
+      <mat-label>Number Only</mat-label>
       <input matInput [appCustomValidator]="numbersPattern" formControlName="numberOnly" />
       <mat-error></mat-error>
     </mat-form-field>
-
-    <mat-form-field>
-      <label>Persian Alpabet Only</label>
+    <!-- Alphabet Field -->
+    <mat-form-field class="{{state('persianAlphabet')}}">
+      <mat-label>Persian Alpabet Only</mat-label>
       <input matInput [appCustomValidator]="persianAlphabetPattern" formControlName="persianAlphabet" />
       <mat-error></mat-error>
     </mat-form-field>
 
+    <!-- Auto Complete Sync - NO LIB BASIC  -->
 
+    <mat-form-field class="{{state('syncAutoComplete')}}">
+      <mat-label>Sync Name Auto Complete</mat-label>
+      <input matInput formControlName="syncAutoComplete" />
+      <mat-error></mat-error>
+    </mat-form-field>
 
-    <button mat-raised-button type="button" (click)="formSubmit()">Save</button>
+    <ng-container *ngIf="filteredNames$ |async; let items">
+      <ng-container *ngIf="items.length">
+        <button mat-flat-button type="button" *ngFor="let item of items" (click)="setSyncAuto(item)">
+          {{item}}
+        </button>
+      </ng-container>
+    </ng-container>
+
+    <!-- Async Auto Complete -->
+    <mat-form-field class="{{state('asyncAutoComplete')}}">
+      <mat-label>Search Engines</mat-label>
+      <input type="text" matInput formControlName="asyncAutoComplete" [matAutocomplete]="asyncAuto">
+      <mat-autocomplete #asyncAuto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let engine of filteredSearchEngines$ | async" [value]="engine.id">
+          {{engine.title}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </form>
+  <button [disabled]="form.invalid" type="button" (click)="formSubmit()">Save</button>
 </div>
